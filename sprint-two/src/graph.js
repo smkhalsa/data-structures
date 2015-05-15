@@ -6,12 +6,11 @@ var Graph = function(){
 
 var GraphNode = function(value) {
   this.value = value;
-  this.edges = [];
+  this.edges = {};
 };
 
 Graph.prototype.addNode = function(nodeName){
   this.storage[nodeName] = new GraphNode(nodeName);
-
 };
 
 Graph.prototype.contains = function(target){
@@ -23,25 +22,24 @@ Graph.prototype.removeNode = function(nodeName){
 };
 
 Graph.prototype.hasEdge = function(fromNode, toNode){
-  var result = false;
-  _.each(this.storage[fromNode].edges, function (value) {
-    if (value === toNode) {
-      result = true;
-    }
-  });
-
-  return result;
+  return this.storage[fromNode].edges.hasOwnProperty(toNode);
 };
 
 Graph.prototype.addEdge = function(fromNode, toNode){
-  this.storage[fromNode].edges.push(toNode);
-  this.storage[toNode].edges.push(fromNode);
+  this.storage[fromNode].edges[toNode] = toNode;
+  this.storage[toNode].edges[fromNode] = fromNode;
 };
 
 Graph.prototype.removeEdge = function(fromNode, toNode){
+  delete this.storage[fromNode].edges[toNode];
+  delete this.storage[toNode].edges[fromNode];
 };
 
-Graph.prototype.forEachNode = function(cb){
+Graph.prototype.forEachNode = function(callback){
+  _.each(this.storage, function(node) {
+    debugger;
+    callback(node);
+  });
 };
 
 /*
