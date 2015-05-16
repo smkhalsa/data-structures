@@ -9,16 +9,17 @@ var GraphNode = function(value) {
   this.edges = {};
 };
 
-Graph.prototype.addNode = function(nodeName){
-  this.storage[nodeName] = new GraphNode(nodeName);
+Graph.prototype.addNode = function(node){
+  // debugger;
+  this.storage[node] = new GraphNode(node);
 };
 
 Graph.prototype.contains = function(target){
   return this.storage.hasOwnProperty(target);
 };
 
-Graph.prototype.removeNode = function(nodeName){
-  delete this.storage[nodeName];
+Graph.prototype.removeNode = function(node){
+  delete this.storage[node];
 };
 
 Graph.prototype.hasEdge = function(fromNode, toNode){
@@ -36,10 +37,8 @@ Graph.prototype.removeEdge = function(fromNode, toNode){
 };
 
 Graph.prototype.forEachNode = function(callback){
-  var scope = this;
-  _.each.apply(scope, scope.storage, function(node) {
-    debugger;
-    callback(node);
+  _.each.call(this, this.storage, function (node) {
+    callback(node.value);
   });
 };
 
@@ -47,5 +46,7 @@ Graph.prototype.forEachNode = function(callback){
  * Complexity: What is the time complexity of the above functions?
  */
 
-
+var log = function () {
+  console.log(this)
+}
 
