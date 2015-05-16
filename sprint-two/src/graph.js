@@ -36,7 +36,8 @@ Graph.prototype.removeEdge = function(fromNode, toNode){
 };
 
 Graph.prototype.forEachNode = function(callback){
-  _.each(this.storage, function(node) {
+  var scope = this;
+  _.each.apply(scope, scope.storage, function(node) {
     debugger;
     callback(node);
   });
